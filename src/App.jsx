@@ -5,7 +5,6 @@ import TomatoIcon from "./assets/tomato.svg?react";
 import Timer from "./components/Timer";
 
 // TODO: When adding chore add option to select time
-// TODO: Add scroll bar
 
 function App() {
   const defaultTime = 60;
@@ -123,15 +122,17 @@ function App() {
         res
       </h1>
       <ChoreInput onAdd={addChore} />
-      <ChoreList
-        onStart={startTimer}
-        onStop={stopTimer}
-        onDelete={deleteChore}
-        onToggleDone={toggleDone}
-        onUpdateText={updateChoreText}
-        onUpdateTime={updateChoreTime}
-        chores={chores}
-      />
+      <div className="max-h-[500px] mt-3 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+        <ChoreList
+          onStart={startTimer}
+          onStop={stopTimer}
+          onDelete={deleteChore}
+          onToggleDone={toggleDone}
+          onUpdateText={updateChoreText}
+          onUpdateTime={updateChoreTime}
+          chores={chores}
+        />
+      </div>
       <Timer
         active={activeIndex !== null}
         time={activeIndex !== null ? chores[activeIndex].time : defaultTime}
