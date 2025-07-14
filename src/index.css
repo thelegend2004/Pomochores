@@ -7,3 +7,8 @@ body {
 button {
   cursor: pointer;
 }
+
+textarea:focus,
+input:focus {
+  outline: solid rgb(254, 108, 133) 1px;
+}

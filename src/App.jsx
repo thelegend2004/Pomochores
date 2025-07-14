@@ -6,7 +6,6 @@ import Timer from "./components/Timer";
 
 // TODO: When adding chore add option to select time
 // TODO: Add scroll bar
-// TODO: Change inputs design
 
 function App() {
   const defaultTime = 60;
@@ -31,6 +30,16 @@ function App() {
         ];
   });
   const [activeIndex, setActiveIndex] = useState(null);
+
+  useEffect(() => {
+    const deactivated = chores.map((chore) => ({
+      ...chore,
+      active: false,
+    }));
+    setChores(deactivated);
+    setActiveIndex(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("chores", JSON.stringify(chores));
@@ -58,6 +67,9 @@ function App() {
   const toggleDone = (index) => {
     const updated = [...chores];
     updated[index].done = !updated[index].done;
+    if (updated[index].time === 0) {
+      updated[index].active = false;
+    }
     setChores(updated);
   };
 
@@ -82,9 +94,11 @@ function App() {
   };
 
   const stopTimer = () => {
-    const updated = [...chores];
+    let updated = [...chores];
     setActiveIndex(null);
-    updated[activeIndex].active = false;
+    if (updated[activeIndex]?.active) {
+      updated[activeIndex].active = false;
+    }
     setChores(updated);
   };
 

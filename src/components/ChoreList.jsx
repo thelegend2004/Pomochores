@@ -21,9 +21,8 @@ function ChoreList({
   return (
     <ul className="mt-4 space-y-2">
       {chores.map((chore, index) => (
-        <div>
+        <div key={index}>
           <li
-            key={index}
             className={`flex justify-between mb-5 items-center p-2 rounded-xl ${
               chore.active ? "bg-red-100" : "bg-white"
             }`}
@@ -40,7 +39,7 @@ function ChoreList({
                 }}
               >
                 <ChevronIcon
-                  className={`relative top-[34px] right-[64px] inline h-6 w-6 mx-1 transition-transform duration-300 ${
+                  className={`relative top-8 right-14 inline h-6 w-6 mx-1 transition-transform duration-300 ${
                     expandedIndex === index ? "rotate-180" : ""
                   }`}
                 />
@@ -93,7 +92,6 @@ function ChoreList({
                 <input
                   type="text"
                   value={chore.text}
-                  min="1"
                   className="w-auto text-gray-700 px-1 py-0.5 border bg-white border-gray-300 rounded-xl"
                   onChange={(e) => onUpdateText(index, e.target.value)}
                 />
@@ -104,9 +102,10 @@ function ChoreList({
                   type="number"
                   value={chore.time}
                   min="1"
-                  className="w-auto text-gray-700 px-1 py-0.5 border bg-white border-gray-300 rounded-xl"
-                  onChange={(e) => onUpdateTime(index, e.target.value)}
+                  className="w-auto text-gray-700 px-1 py-1 border bg-white border-gray-300 rounded-xl"
+                  onChange={(e) => onUpdateTime(index, e.target.value || 0)}
                 />
+                <span> seconds</span>
               </div>
             </div>
           </div>
