@@ -13,7 +13,7 @@ export default function ChoreInput({ onAdd }) {
   return (
     <div className="flex gap-2">
       <input
-        className="border rounded p-2 w-full"
+        className="border rounded p-2 w-full bg-white"
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Add a chore..."
