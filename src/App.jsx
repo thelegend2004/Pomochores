@@ -1,31 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChoreInput from "./components/ChoreInput";
 import ChoreList from "./components/ChoreList";
 import TomatoIcon from "./assets/tomato.svg?react";
 import Timer from "./components/Timer";
 
-// TODO: Save chores to localstorage
 // TODO: Add possibility to change time of chore
 // TODO: When adding chore add option to select time
+// TODO: Add scroll bar
 // TODO: Change inputs design
 
 function App() {
   const defaultTime = 60;
-  const [chores, setChores] = useState([
-    {
-      text: "New Chore #0",
-      done: false,
-      active: false,
-      time: defaultTime + 20,
-    },
-    {
-      text: "New Chore #1",
-      done: false,
-      active: false,
-      time: defaultTime + 30,
-    },
-  ]);
+  const [chores, setChores] = useState(() => {
+    const saved = localStorage.getItem("chores");
+
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            text: "New Chore #0",
+            done: false,
+            active: false,
+            time: defaultTime + 20,
+          },
+          {
+            text: "New Chore #1",
+            done: false,
+            active: false,
+            time: defaultTime + 30,
+          },
+        ];
+  });
   const [activeIndex, setActiveIndex] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("chores", JSON.stringify(chores));
+  }, [chores]);
 
   const addChore = (text) => {
     setChores([
