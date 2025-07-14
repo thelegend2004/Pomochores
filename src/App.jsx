@@ -4,10 +4,20 @@ import ChoreList from "./components/ChoreList";
 import TomatoIcon from "./assets/tomato.svg?react";
 import Timer from "./components/Timer";
 
+// TODO: Save chores to localstorage
+// TODO: Add possibility to change time of chore
+// TODO: When adding chore add option to select time
+// TODO: Change inputs design
+
 function App() {
   const defaultTime = 60;
   const [chores, setChores] = useState([
-    { text: "New Chore #0", done: false, active: false, time: defaultTime },
+    {
+      text: "New Chore #0",
+      done: false,
+      active: false,
+      time: defaultTime + 20,
+    },
     {
       text: "New Chore #1",
       done: false,
@@ -42,10 +52,8 @@ function App() {
   const startTimer = (index) => {
     const updated = [...chores].map((chore) => {
       chore.active = false;
-
       return chore;
     });
-
     updated[index].done = false;
     updated[index].active = true;
 
@@ -55,9 +63,14 @@ function App() {
 
   const stopTimer = () => {
     const updated = [...chores];
-    updated[activeIndex].time = 55;
     setActiveIndex(null);
     updated[activeIndex].active = false;
+    setChores(updated);
+  };
+
+  const tick = () => {
+    const updated = [...chores];
+    updated[activeIndex].time -= 1;
     setChores(updated);
   };
 
@@ -85,8 +98,9 @@ function App() {
       />
       <Timer
         active={activeIndex !== null}
-        onDone={finishTimer}
         time={activeIndex !== null ? chores[activeIndex].time : defaultTime}
+        onTick={tick}
+        onFinish={finishTimer}
       />
     </div>
   );

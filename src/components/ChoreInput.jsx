@@ -1,12 +1,14 @@
 import { useState } from "react";
 
-export default function ChoreInput({ onAdd }) {
+function ChoreInput({ onAdd }) {
   const [text, setText] = useState("");
+  // const [duration, setDuration] = useState("");
 
   const handleAdd = () => {
     if (text.trim()) {
       onAdd(text.trim());
       setText("");
+      // setDuration("");
     }
   };
 
@@ -27,3 +29,5 @@ export default function ChoreInput({ onAdd }) {
     </div>
   );
 }
+
+export default ChoreInput;

@@ -6,20 +6,16 @@ import StartIcon from "../assets/start.svg?react";
 import StopIcon from "../assets/stop.svg?react";
 import { useState } from "react";
 
-export default function ChoreList({
-  chores,
-  onStart,
-  onStop,
-  onDelete,
-  onToggleDone,
-}) {
+function ChoreList({ chores, onStart, onStop, onDelete, onToggleDone }) {
   const [trashbinHoveredIndex, setTrashbinHoveredIndex] = useState(null);
   return (
     <ul className="mt-4 space-y-2">
       {chores.map((chore, index) => (
         <li
           key={index}
-          className="flex bg-white justify-between items-center p-2 border rounded"
+          className={`flex  justify-between items-center p-2 border rounded ${
+            chore.active ? "bg-red-100" : "bg-white"
+          }`}
         >
           <span className={chore.done ? "line-through text-gray-400" : ""}>
             {chore.text} :{" "}
@@ -64,3 +60,5 @@ export default function ChoreList({
     </ul>
   );
 }
+
+export default ChoreList;
