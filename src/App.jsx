@@ -44,11 +44,8 @@ function App() {
     localStorage.setItem("chores", JSON.stringify(chores));
   }, [chores]);
 
-  const addChore = (text) => {
-    setChores([
-      ...chores,
-      { text, done: false, active: false, time: defaultTime },
-    ]);
+  const addChore = (text, time) => {
+    setChores([...chores, { text, done: false, active: false, time: time }]);
   };
 
   const updateChoreText = (index, newText) => {
@@ -113,7 +110,7 @@ function App() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4">
+    <div className="max-w-md mx-auto mt-10 p-2">
       <h1 className="font-bold text-center text-5xl mb-6">
         P<TomatoIcon className="inline h-10 w-10 mx-1" />
         m<TomatoIcon className="inline h-10 w-10 mx-1" />

@@ -2,13 +2,13 @@ import { useState } from "react";
 
 function ChoreInput({ onAdd }) {
   const [text, setText] = useState("");
-  // const [duration, setDuration] = useState("");
+  const [duration, setDuration] = useState("");
 
   const handleAdd = () => {
-    if (text.trim()) {
-      onAdd(text.trim());
+    if (text.trim() && parseInt(duration, 10)) {
+      onAdd(text.trim(), parseInt(duration, 10));
       setText("");
-      // setDuration("");
+      setDuration("");
     }
   };
 
@@ -19,6 +19,14 @@ function ChoreInput({ onAdd }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Add a chore..."
+      />
+      <input
+        className="rounded-xl p-2 w-full bg-white"
+        type="number"
+        value={duration}
+        min="1"
+        onChange={(e) => setDuration(Number(e.target.value))}
+        placeholder="Chore duration..."
       />
       <button
         onClick={handleAdd}
