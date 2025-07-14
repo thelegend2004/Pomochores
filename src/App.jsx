@@ -4,7 +4,6 @@ import ChoreList from "./components/ChoreList";
 import TomatoIcon from "./assets/tomato.svg?react";
 import Timer from "./components/Timer";
 
-// TODO: Add possibility to change time of chore
 // TODO: When adding chore add option to select time
 // TODO: Add scroll bar
 // TODO: Change inputs design
@@ -44,10 +43,21 @@ function App() {
     ]);
   };
 
+  const updateChoreText = (index, newText) => {
+    const updated = [...chores];
+    updated[index].text = newText;
+    setChores(updated);
+  };
+
+  const updateChoreTime = (index, newTime) => {
+    const updated = [...chores];
+    updated[index].time = parseInt(newTime, 10);
+    setChores(updated);
+  };
+
   const toggleDone = (index) => {
     const updated = [...chores];
     updated[index].done = !updated[index].done;
-    updated[index].active = false;
     setChores(updated);
   };
 
@@ -104,6 +114,8 @@ function App() {
         onStop={stopTimer}
         onDelete={deleteChore}
         onToggleDone={toggleDone}
+        onUpdateText={updateChoreText}
+        onUpdateTime={updateChoreTime}
         chores={chores}
       />
       <Timer
