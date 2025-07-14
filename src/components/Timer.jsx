@@ -23,7 +23,7 @@ export default function Timer({ active, onDone }) {
   const seconds = secondsLeft % 60;
 
   return (
-    <div>
+    <div className="mt-4 text-center text-2xl font-mono">
       {active ? `${minutes}:${seconds.toString().padStart(2, "0")}` : "Idle"}
     </div>
   );

@@ -1,4 +1,13 @@
-export default function ChoreList({ chores, onStart, onToggleDone }) {
+import TrashbinIcon from "../assets/trashbin.svg?react";
+import TrashbinHoverIcon from "../assets/trashbin-hover.svg?react";
+import ToggleIcon from "../assets/toggle.svg?react";
+import UntoggleIcon from "../assets/untoggle.svg?react";
+import StartIcon from "../assets/start.svg?react";
+import StopIcon from "../assets/stop.svg?react";
+import { useState } from "react";
+
+export default function ChoreList({ chores, onStart, onDelete, onToggleDone }) {
+  const [trashbinHoveredIndex, setTrashbinHoveredIndex] = useState(null);
   return (
     <ul className="mt-4 space-y-2">
       {chores.map((chore, index) => (
@@ -11,13 +20,33 @@ export default function ChoreList({ chores, onStart, onToggleDone }) {
           </span>
           <div className="space-x-2">
             <button onClick={() => onStart(index)} className="text-red-600">
-              Start
+              {chore.active ? (
+                <StopIcon className="inline h-6 w-6 mx-1" />
+              ) : (
+                <StartIcon className="inline h-6 w-6 mx-1" />
+              )}
             </button>
             <button
               onClick={() => onToggleDone(index)}
               className="text-gray-600"
             >
-              {chore.done ? "x" : "✓"}
+              {chore.done ? (
+                <UntoggleIcon className="inline h-6 w-6 mx-1" />
+              ) : (
+                <ToggleIcon className="inline h-6 w-6 mx-1" />
+              )}
+            </button>
+
+            <button
+              onMouseEnter={() => setTrashbinHoveredIndex(index)}
+              onMouseLeave={() => setTrashbinHoveredIndex(null)}
+              onClick={() => onDelete(index)}
+            >
+              {trashbinHoveredIndex === index ? (
+                <TrashbinHoverIcon className="inline h-6 w-6 mx-1" />
+              ) : (
+                <TrashbinIcon className="inline h-6 w-6 mx-1" />
+              )}
             </button>
           </div>
         </li>
