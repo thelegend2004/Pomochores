@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 
-export default function Timer({ active, onDone }) {
-  const [secondsLeft, setSecondsLeft] = useState(1 * 10);
+export default function Timer({ active, onDone, time }) {
+  const [secondsLeft, setSecondsLeft] = useState(null);
 
   useEffect(() => {
     if (!active) return;
-
+    setSecondsLeft(time);
     const timer = setInterval(() => {
-      setSecondsLeft((sec) => {
-        if (sec <= 1) {
-          clearInterval(timer);
-          onDone();
-          return 0;
-        }
-        return sec - 1;
-      });
+      setSecondsLeft((sec) => Math.max(sec - 1, 0));
     }, 1000);
     return () => clearInterval(timer);
-  }, [active, onDone]);
+  }, [active, onDone, time]);
+
+  useEffect(() => {
+    if (active && secondsLeft === 0) {
+      onDone();
+      setSecondsLeft(1 * 3);
+    }
+  }, [active, onDone, secondsLeft]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;

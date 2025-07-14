@@ -5,18 +5,29 @@ import TomatoIcon from "./assets/tomato.svg?react";
 import Timer from "./components/Timer";
 
 function App() {
+  const defaultTime = 60;
   const [chores, setChores] = useState([
-    { text: "New Task #0", done: false, active: false },
+    { text: "New Chore #0", done: false, active: false, time: defaultTime },
+    {
+      text: "New Chore #1",
+      done: false,
+      active: false,
+      time: defaultTime + 30,
+    },
   ]);
   const [activeIndex, setActiveIndex] = useState(null);
 
   const addChore = (text) => {
-    setChores([...chores, { text, done: false, active: false }]);
+    setChores([
+      ...chores,
+      { text, done: false, active: false, time: defaultTime },
+    ]);
   };
 
   const toggleDone = (index) => {
     const updated = [...chores];
     updated[index].done = !updated[index].done;
+    updated[index].active = false;
     setChores(updated);
   };
 
@@ -29,9 +40,24 @@ function App() {
   };
 
   const startTimer = (index) => {
-    const updated = [...chores];
-    updated[index].active = !updated[index].active;
+    const updated = [...chores].map((chore) => {
+      chore.active = false;
+
+      return chore;
+    });
+
+    updated[index].done = false;
+    updated[index].active = true;
+
     setActiveIndex(index);
+    setChores(updated);
+  };
+
+  const stopTimer = () => {
+    const updated = [...chores];
+    updated[activeIndex].time = 55;
+    setActiveIndex(null);
+    updated[activeIndex].active = false;
     setChores(updated);
   };
 
@@ -52,11 +78,16 @@ function App() {
       <ChoreInput onAdd={addChore} />
       <ChoreList
         onStart={startTimer}
+        onStop={stopTimer}
         onDelete={deleteChore}
         onToggleDone={toggleDone}
         chores={chores}
       />
-      <Timer active={activeIndex !== null} onDone={finishTimer} />
+      <Timer
+        active={activeIndex !== null}
+        onDone={finishTimer}
+        time={activeIndex !== null ? chores[activeIndex].time : defaultTime}
+      />
     </div>
   );
 }

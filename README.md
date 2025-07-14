@@ -1,6 +1,6 @@
 # Pomochores
 
-A minimalist Pomodoro-style task manager - create chores, start timers, and clear them once done - all in a clean React + Vite + Tailwind setup.
+A minimalist Pomodoro-style chore manager - create chores, start timers, and clear them once done - all in a clean React + Vite + Tailwind setup.
 
 ## Getting Started
 

@@ -6,7 +6,13 @@ import StartIcon from "../assets/start.svg?react";
 import StopIcon from "../assets/stop.svg?react";
 import { useState } from "react";
 
-export default function ChoreList({ chores, onStart, onDelete, onToggleDone }) {
+export default function ChoreList({
+  chores,
+  onStart,
+  onStop,
+  onDelete,
+  onToggleDone,
+}) {
   const [trashbinHoveredIndex, setTrashbinHoveredIndex] = useState(null);
   return (
     <ul className="mt-4 space-y-2">
@@ -16,10 +22,14 @@ export default function ChoreList({ chores, onStart, onDelete, onToggleDone }) {
           className="flex bg-white justify-between items-center p-2 border rounded"
         >
           <span className={chore.done ? "line-through text-gray-400" : ""}>
-            {chore.text}
+            {chore.text} :{" "}
+            <span className="text-gray-500">{chore.time} seconds</span>
           </span>
           <div className="space-x-2">
-            <button onClick={() => onStart(index)} className="text-red-600">
+            <button
+              onClick={chore.active ? () => onStop() : () => onStart(index)}
+              className="text-red-600"
+            >
               {chore.active ? (
                 <StopIcon className="inline h-6 w-6 mx-1" />
               ) : (
