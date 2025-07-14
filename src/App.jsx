@@ -50,13 +50,16 @@ function App() {
 
   const updateChoreText = (index, newText) => {
     const updated = [...chores];
+    if (newText.length > 18) return;
     updated[index].text = newText;
     setChores(updated);
   };
 
   const updateChoreTime = (index, newTime) => {
     const updated = [...chores];
-    updated[index].time = parseInt(newTime, 10);
+    const newDuration = parseInt(newTime, 10);
+    if (newDuration < 0 || newDuration > 100000) return;
+    updated[index].time = newDuration;
     setChores(updated);
   };
 

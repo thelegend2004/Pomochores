@@ -29,7 +29,7 @@ function ChoreList({
           >
             <span className={chore.done ? "line-through text-gray-400" : ""}>
               {chore.text} :{" "}
-              <span className="text-gray-500">{chore.time} seconds</span>
+              <span className="text-gray-500">{chore.time} sec.</span>
             </span>
 
             <div className="space-x-2">
